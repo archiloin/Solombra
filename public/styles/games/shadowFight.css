@@ -1,0 +1,69 @@
+.shadow-fight {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient(to bottom, #000, #333);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.fight-area {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.character {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.attack-button {
+    padding: 10px 20px;
+    background-color: #ff3b3b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.attack-button:hover {
+    background-color: #ff0000;
+    box-shadow: 0 0 10px #ff3b3b;
+}
+
+.log-area {
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.log-area ul {
+    list-style: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    color: #ddd;
+}
+
+.game-over {
+    font-size: 2em;
+    color: #ff3b3b;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

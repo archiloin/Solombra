@@ -1,0 +1,26 @@
+.modal-content {
+    background: rgba(0, 0, 30, 0.85);
+    border: 1px solid #4e4e72;
+    border-radius: 8px;
+    color: #c0c0d0;
+}
+.modal-header, .modal-footer {
+    border-bottom: 1px solid #4e4e72;
+    border-top: 1px solid #4e4e72;
+}
+
+.modal-title {
+    font-size: 1.3em; /* Plus grande taille pour les titres */
+    text-shadow: 2px 2px 4px #000; /* Ombre portée pour le titre */
+}
+
+.modal-body {
+    font-family: Arial, sans-serif; /* Police plus lisible pour le contenu */
+    font-size: 1.2em;
+    line-height: 1.4; /* Espacement des lignes pour la lisibilité */
+    text-shadow: 1px 1px 3px #000; /* Ombre portée plus subtile pour le corps */
+}
+
+.modal-title {
+    color: #e0e0f0;
+}

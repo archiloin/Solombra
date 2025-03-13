@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Solombra{% endblock %}
+
+{% block body %}
+    <div class="map-container">
+        <div class="solombra-kernel-background">
+            <img id="img-kernel" src="{{ asset('images/kernel.png') }}" alt="Noyau de Solombra" usemap="#image-map">
+        </div>
+
+        <svg id="svg-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></svg>
+        <map name="image-map">
+            <area target="" alt="Portail vers Solombra" title="Portail vers Solombra" href="{{ path('app_index') }}" coords="500,482,36" shape="circle" data-original-coords="500,482,36">
+        </map>
+    </div>
+    <script src="{{ asset('js/selectMap.js') }}"></script>
+    <script src="{{ asset('js/resizeMap.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    body {
+        background-color: #000 !important;
+        background-image: none;
+        margin: 0; /* Supprime la marge par défaut du corps */
+        overflow: hidden; /* Empêche le défilement de la page */
+    }
+
+    .map-container {
+        width: 100%;
+        height: 100vh; /* Pour occuper toute la hauteur de la fenêtre */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    #img-kernel {
+        border-radius: 13%;
+        width: 100%; /* L'image occupe 100% de la largeur du conteneur */
+        height: 100%; /* L'image occupe 100% de la hauteur du conteneur */
+        animation: rotate 0.00000001s linear infinite; /* Rotation rapide en 1 seconde */
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Ajoutez d'autres styles ici si nécessaire */
+</style>
+{% endblock %}

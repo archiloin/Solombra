@@ -1,0 +1,54 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Gestion des Unités - Solombra{% endblock %}
+
+{% block card %}
+    <div class="main-panel">
+        <section class="content">
+            <div class="container-fluid">
+                <h1>Gestion des Unités</h1>
+
+                {% for unit in units %}
+                    <div class="unit">
+                        <img src="{{ asset(unit.image) }}" class="unit-img" alt="Image de l'unité"/>
+                        <div class="unit-info">
+                            <h3>
+                                {{ unit.name }}
+                            </h3>
+                            <hr>
+                            <h4>Ressource nécessaire :</h4>
+                            <ul>
+                                <li>{{ app.user.selectedEmpire.resources[0].info.id }} {{ unit.birthCost[1] }}</li>
+                                <li>{{ app.user.selectedEmpire.resources[1].info.id }} {{ unit.birthCost[1] }}</li>
+                                <li>Durée de la naissance : {{ unit.birthTime }}s</li>
+                            </ul>
+                            <a href="{{ path('admin_unit_edit', { 'id': unit.id }) }}" class="btn btn-mystic">Modifier</a>
+                        </div> {# End Unit Info #}
+                        <details close>
+                            <summary>
+                                <span class="icon-background">
+                                    Voir plus de détails<img src="{{ asset('images/icons/help-circle.svg') }}" alt="Information">
+                                </span>
+                            </summary>
+                            <h4>Description :</h4>
+                            <ul>
+                                <li>{{ unit.description }}</li>
+                            </ul>
+                            <h4>Caractéristiques de combat :</h4>
+                            <ul>
+                                <li>Santé : {{ unit.health }}</li>
+                                <li>Attaque : {{ unit.attack }}</li>
+                                <li>Défense : {{ unit.defence }}</li>
+                                <li>Rapidité : {{ unit.speed }}</li>
+                                <li>Endurance : {{ unit.endurance }}</li>
+                                <li>Armure : {{ unit.shield }}</li>
+                                <li>Stockage : {{ unit.stockage }}</li>
+                            </ul>
+                        </details>
+                    </div> {# End Unit #}
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

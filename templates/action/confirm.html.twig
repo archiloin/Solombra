@@ -1,0 +1,31 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Confirmation de l'action{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set bootstrapCss = 1%}
+
+{% block card %}
+<div class="main-panel">
+    <h1>Confirmation de l'Attaque</h1>
+    
+    <p>Vous êtes sur le point d'envoyer une attaque à l'empire ennemi. Voici les détails de votre attaque :</p>
+
+    <ul>
+        <li><strong>Empire Défenseur :</strong> {{ targetEmpire.name }}</li>
+        <li><strong>Temps de Trajet :</strong> {{ travelTime }} secondes</li>
+    </ul>
+
+    <h2>Unités Sélectionnées :</h2>
+    <ul>
+        {% for unitId, quantity in selectedUnits %}
+            <li>{{ unitNames[unitId] }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('app_prepare_action', {'targetEmpireId': targetEmpire.id, 'dimension': dimension, 'zone': zone}) }}" class="btn btn-secondary">Retour à la Sélection des Unités</a>
+    <a href="{{ path('app_execute_action', {'targetEmpireId': targetEmpire.id, 'dimension': dimension, 'zone': zone}) }}" class="btn btn-mystic">Confirmer l'Attaque</a>
+</div>
+{% endblock %}

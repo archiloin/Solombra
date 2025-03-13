@@ -1,0 +1,70 @@
+.building-upgrade {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    color: #e0e0f0;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+}
+
+.building-upgrade .header h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.building-upgrade .content p, 
+.building-upgrade .content ul {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #b0b0c0;
+    text-align: left;
+}
+
+.building-upgrade ul li {
+    margin-bottom: 8px;
+}
+
+.building-upgrade .btn {
+    background-color: #5c4af0;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.building-upgrade .btn:hover {
+    background-color: #7357f2;
+    transform: translateY(-2px);
+}
+
+.upgrade-timer {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+}
+
+.upgrade-timer span {
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.building-upgrade {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #2c2c40;
+}

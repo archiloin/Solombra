@@ -1,0 +1,56 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Classement Puzzle Mystique{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set bootstrapCss = 1%}
+{% set puzzleMystiqueCss = 1%}
+{% set puzzleMystiqueJs = 1%}
+
+{% block card %}
+    <div class="main-panel">
+        <div id="forPuzzle" class="puzzle-container"></div>
+        <ul id="menu">
+            <li>&#x2630;</li>
+            <li>Image par défaut</li>
+            <li>Forme : 
+                <select id="shape">
+                    <option value="1" selected>Classique</option>
+                    <option value="2">Triangle</option>
+                    <option value="3">Rond</option>
+                    <option value="4">Rectiligne</option>
+                </select>
+            </li>
+            <li class="puzzle-size" data-size="12">12 pièces</li>
+            <li class="puzzle-size" data-size="25">25 pièces</li>
+            <li class="puzzle-size" data-size="50">50 pièces</li>
+            <li class="puzzle-size" data-size="100">100 pièces</li>
+            <li class="puzzle-size" data-size="200">200 pièces</li>
+        </ul>
+    </div>
+    <script>
+        // Variables pour stocker les choix utilisateur
+        let selectedPuzzleType = "1"; // Valeur par défaut : Classique
+        let selectedPuzzleSize = 12;  // Valeur par défaut : 12 pièces
+
+        // Gestionnaire pour le choix du type de puzzle
+        document.getElementById("shape").addEventListener("change", (event) => {
+            selectedPuzzleType = event.target.value; // Récupère la valeur sélectionnée
+            console.log("Type de puzzle choisi :", selectedPuzzleType);
+        });
+
+        // Gestionnaire pour le choix de la taille du puzzle
+        document.querySelectorAll(".puzzle-size").forEach((item) => {
+            item.addEventListener("click", (event) => {
+                selectedPuzzleSize = parseInt(event.target.dataset.size, 10); // Récupère la taille depuis data-size
+                console.log("Taille du puzzle choisie :", selectedPuzzleSize);
+
+                // Ajouter un indicateur visuel pour le choix actif
+                document.querySelectorAll(".puzzle-size").forEach((el) => el.classList.remove("active"));
+                event.target.classList.add("active");
+            });
+        });
+    </script>
+{% endblock %}

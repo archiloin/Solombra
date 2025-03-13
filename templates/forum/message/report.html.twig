@@ -1,0 +1,44 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Signaler le message{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set bootstrapCss = 1 %}
+{% set bootstrapIcons = 1 %}
+{% set forumCss = 1 %}
+
+{% block card %}
+    <div class="main-panel">
+        <h2 class="text-center my-4">Signaler le message</h2>
+        <div class="report-section mt-3">
+            {{ form_start(form, { 'attr': { 'class': 'needs-validation', 'novalidate': 'novalidate' } }) }}
+                <div class="mb-3">
+                    {{ form_label(form.reason, 'Motif du signalement', { 'label_attr': { 'class': 'form-label' } }) }}
+                    {{ form_widget(form.reason, {
+                        'attr': {
+                            'class': 'form-control' ~ (form.reason.vars.errors|length > 0 ? ' is-invalid' : ''),
+                            'rows': 6,
+                            'placeholder': 'Expliquez pourquoi vous signalez ce message...'
+                        }
+                    }) }}
+                    {% if form.reason.vars.errors|length > 0 %}
+                        <div class="invalid-feedback">
+                            {{ form_errors(form.reason)|replace({'<li>': '<li><i class="bi bi-shield-fill-exclamation me-2"></i>'})|raw }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="bi bi-flag"></i> Signaler
+                    </button>
+                    <a href="{{ path('app_forum_post', { id: post.id }) }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Retour au post
+                    </a>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ app.user.username }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-4">
+                <div class="card card-custom">
+                    <div class="card-body">
+                        <h4 class="card-title">Profil de {{ app.user.username }}</h4>
+                        <div class="mb-3">
+                            <strong>Email :</strong> {{ app.user.email }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Nom d'utilisateur :</strong> {{ app.user.username }}
+                        </div>
+
+                        <a href="{{ path('app_profil_edit') }}" class="btn btn-custom">Modifier le profil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Modifier le message{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set bootstrapCss = 1 %}
+{% set bootstrapIcons = 1 %}
+{% set forumCss = 1 %}
+
+{% block card %}
+    <div class="main-panel">
+        <h2 class="text-center my-4">Modifier le message</h2>
+        {{ include('forum/message/_form.html.twig') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Knowledge{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set bootstrapCss = 1%}
+
+{% block card %}
+    <div class="main-panel">
+        <div class="content">
+            <h1>Étape 1: Introduction aux Forces de Base</h1>
+            <p>Objectif: Présenter les quatre forces fondamentales, avec un accent particulier sur l'électromagnétisme et la force faible.</p>
+
+            <div class="question">
+                <h2>Quiz: Caractéristiques des Forces Fondamentales</h2>
+                <p>1. Quelle force fondamentale est responsable de l'attraction entre masses?</p>
+                <div class="answer">
+                    <input type="radio" id="gravity" name="question1">
+                    <label for="gravity">Gravité</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="electromagnetism" name="question1">
+                    <label for="electromagnetism">Électromagnétisme</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="weak" name="question1">
+                    <label for="weak">Force faible</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="strong" name="question1">
+                    <label for="strong">Force forte</label>
+                </div>
+
+                <p>2. Quelle force opère à l'échelle subatomique pour contrôler la désintégration radioactive?</p>
+                <div class="answer">
+                    <input type="radio" id="gravity2" name="question2">
+                    <label for="gravity2">Gravité</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="electromagnetism2" name="question2">
+                    <label for="electromagnetism2">Électromagnétisme</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="weak2" name="question2">
+                    <label for="weak2">Force faible</label>
+                </div>
+                <div class="answer">
+                    <input type="radio" id="strong2" name="question2">
+                    <label for="strong2">Force forte</label>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

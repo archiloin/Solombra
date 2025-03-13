@@ -1,0 +1,71 @@
+#menu {
+    position: relative;
+    list-style-type: none;
+    padding-left: 5px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    background-color: #2e2752; /* Couleur sombre adaptée à Solombra */
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#menu li {
+    margin: 0 5px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    background-color: #6652a8;
+    color: #e2d9f3;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+#menu li:hover {
+    background-color: #a78ef1;
+}
+
+.main-panel {
+    position: relative;
+    width: 100%;
+    height: 600px; /* Définit une hauteur explicite */
+    max-width: 1200px; /* Ajoute une largeur maximale si nécessaire */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+#forPuzzle {
+    position: relative;
+    width: 100%; /* Occupe toute la largeur de .main-panel */
+    height: calc(100% - 40px); /* Réduit la hauteur pour inclure des marges ou des espaces */
+    background-color: #211a3a;
+    border: 2px solid #402a7a;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #4a3694;
+    overflow: hidden;
+}
+
+
+.polypiece {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+}
+
+.moving {
+    transition-property: top, left;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+
+.gameCanvas {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+}

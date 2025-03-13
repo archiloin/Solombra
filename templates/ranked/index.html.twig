@@ -1,0 +1,59 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Classement Shadow Fight{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set modalCss = 1 %}
+{% set bootstrapCss = 1 %}
+{% set bootstrapJs = 1 %}
+
+{% block card %}
+    <div class="main-panel">
+        <h1 class="text-center mb-4">Classement des Joueurs - Shadow Fight</h1>
+        
+        {% if rankings is not empty %}
+            <div class="table-responsive">
+                <table class="table table-dark table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Empire</th>
+                            <th scope="col">Héro</th>
+                            <th scope="col">Niveau</th>
+                            <th scope="col">XP</th>
+                            <th scope="col">Santé</th>
+                            <th scope="col">Nom</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set rank = 0 %}
+                        {% for ranking in rankings %}
+                            {% for shadowFight in ranking.shadowFights %}
+                                {% set rank = rank + 1 %}
+                                <tr>
+                                    <th scope="row">{{ rank }}</th>
+                                    <td>{{ shadowFight.empire.name }}</td>
+                                    <td>{{ shadowFight.empire.hero.name }}</td>
+                                    <td>{{ ranking.lvl }}</td>
+                                    <td>{{ ranking.xp }}</td>
+                                    <td>{{ ranking.health }}</td>
+                                    <td>{{ ranking.name }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">Aucun joueur classé pour l'instant.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                Aucun classement disponible pour le moment.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Solombra{% endblock %}
+
+{% block body %}
+    {% include ('base/header.html.twig') %}
+    <section class="content">
+        <div class="container-fluid">
+
+            {% include ('base/flash-message.html.twig') %}
+            
+                {% include ('base/hero.html.twig') %}
+
+                {% block card %}
+                
+                {% endblock %}
+            </div>
+            <!-- Clear Floats -->
+            <div style="clear:both;"></div>
+        </div>
+    </section>
+    {% include ('base/footer.html.twig') %}
+
+{% endblock %}

@@ -1,0 +1,190 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Map{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set modalCss = 1%}
+{% set bootstrapCss = 1%}
+{% set bootstrapJs = 1%}
+
+{% block card %}
+<style>
+    .occupied {
+        color: white; /* Couleur du texte */
+        background-color: red; /* Fond rouge pour indiquer l'occupation */
+        padding: 2px 5px; /* Petit padding autour du texte */
+        border-radius: 3px; /* Coins arrondis pour le fond */
+        font-size: 12px; /* Taille de la police */
+        text-align: center; /* Centrer le texte */
+    }
+</style>
+
+<div class="main-panel">
+    {% set moins = dimension - 1 %}
+    {% set moinsdix = dimension - 10 %}
+    {% set moinscent = dimension - 100 %}
+    {% set plus = dimension + 1 %}
+    {% set plusdix = dimension + 10 %}
+    {% set pluscent = dimension + 100 %}
+    <div class="text-center" style="font-size:3em;">
+        {% if dimension > 1 %}
+            <a href="{{ path('app_map', {'dimension': moins }) }}">-1</a>
+            <a href="{{ path('app_map', {'dimension': plus }) }}">+1</a>
+            <a href="{{ path('app_map', {'dimension': plusdix }) }}">+10</a>
+            <a href="{{ path('app_map', {'dimension': pluscent }) }}">+100</a>
+        {% elseif dimension < 1 %}
+            <h3>Easter Egg Dimension</h3>
+        {% else %}
+            <a href="{{ path('app_map', {'dimension': plus }) }}">+1 dimension</a>
+        {% endif %}
+
+        {% if dimension > 10 %}
+            <a href="{{ path('app_map', {'dimension': moinsdix }) }}">-10</a>
+        {% endif %}
+        {% if dimension > 100 %}
+            <a href="{{ path('app_map', {'dimension': moinscent }) }}">-100</a>
+        {% endif %}
+    </div>
+    <div class="map-container" style="position: relative;">
+        <!-- Image Map Generated -->
+        <img class="image-map" src="{{ asset('images/maps/map.webp') }}" usemap="#image-map">
+        <svg id="svg-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></svg>
+        
+        <!-- Marqueurs sur la carte -->
+        {% for map in maps %}
+            {% set zoneOwner = zonesWithOwners[map.id] %}
+            {% if map.id != 5 %}
+                <div class="zone-marker" style="position: absolute; left: {{ map.markerX }}%; top: {{ map.markerY }}%;">
+                    {% if zoneOwner %}
+                        <div class="zone-owner">
+                            {% if zonesWithOwners[map.id].empireId is not empty %}
+                                <img src="{{ asset('images/profiles/' ~ zonesWithOwners[map.id].empireId ~ '.png') }}" alt="Avatar de {{ zonesWithOwners[map.id].username|u.truncate(8, '...') }}" />
+                                <h3>{{ zonesWithOwners[map.id].username|u.truncate(12, '...') }}</h3>
+                                <p>Possède cette zone</p>
+                                {% if zonesWithOwners[map.id].username != app.user.username %}
+                                    <a class="btn btn-danger" href="{{ path('app_prepare_action', {'targetEmpireId': zonesWithOwners[map.id].empireId, 'dimension': dimension, 'zone': map.id}) }}">Attaquer</a>
+                                {% else %}
+                                    <p>Vous ne pouvez pas attaquer votre propre empire.</p>
+                                {% endif %}
+                            {% else %}
+                                <h3>Zone libre</h3>
+                                <p>Pas encore conquise</p>
+                                <a class="btn btn-success" href="{{ path('app_hero_new', {'dimension': dimension, 'zone': map.id}) }}">Conquérir</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <map name="image-map">
+            {% for map in maps %}
+            {% if map.id >= 1 and map.id <= 4 %}
+                <area target="" alt="{{ map.name }}" title="{{ map.name }}" data-bs-toggle="modal" data-bs-target="#modalMap-{{ map.id }}" href="" coords="{{ map.coord }}" shape="poly" data-original-coords="{{ map.coord }}">
+                <div class="modal fade" id="modalMap-{{ map.id }}" tabindex="-1" role="dialog" aria-labelledby="modalMapLabel-{{ map.id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalMapLabel-{{ map.id }}">Le Terrain {{ map.name }} appartient à {{ zonesWithOwners[map.id].username }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% set zoneOwner = zonesWithOwners[map.id] %}
+                                {% if zoneOwner and zoneOwner.empireId is not empty %}
+                                    {% if zoneOwner.empireId != app.user.selectedEmpire.id %}
+                                        <a type="button" class="btn btn-mystic" href="{{ path('app_prepare_action', {'targetEmpireId': zoneOwner.empireId, 'dimension': dimension, 'zone': map.id}) }}">Attaquer</a>
+                                    {% else %}
+                                        <p>Vous ne pouvez pas vous attaquer vous-même.</p>
+                                    {% endif %}
+                                {% else %}
+                                    <p>
+                                        <a href="{{ path('app_hero_new', {'dimension': dimension, 'zone': map.id}) }}" class="btn btn-mystic">Établir un nouvel empire ici ?</a>
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if map.id == 5 %}
+                <area target="" href="{{ path('app_home') }}" alt="{{ map.name }}" title="{{ map.name }}" href="" coords="{{ map.coord }}" shape="poly" data-original-coords="{{ map.coord }}">
+            {% endif %}
+            {% endfor %}
+        </map>
+    </div>
+</div>
+
+<style>
+    .zone-marker {
+        width: 100px;
+        height: 100px;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .zone-owner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(34, 34, 34, 0.8), rgba(85, 85, 85, 0.9));
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        padding: 10px 15px;
+        color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        font-size: 0.9em;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .zone-owner:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+    }
+
+    .zone-owner img {
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+        object-fit: cover;
+    }
+
+    .zone-owner h3 {
+        margin: 0;
+        font-size: 1.2em;
+        color: #ffd700;
+        text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    .zone-owner p {
+        margin: 5px 0;
+        font-size: 0.8em;
+        line-height: 1.2;
+    }
+
+    .owner-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    .owner-name {
+        color: white;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .zone-available {
+        color: green;
+        font-weight: bold;
+    }
+</style>
+
+<script src="{{ asset('js/selectMap.js') }}"></script>
+<script src="{{ asset('js/resizeMap.js') }}"></script>
+{% endblock %}

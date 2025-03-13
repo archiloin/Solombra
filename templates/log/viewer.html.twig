@@ -1,0 +1,67 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Battle Log{% endblock %}
+
+{% block card %}
+    <div class="main-panel">
+        <h1 class="text-center mb-4">Journal de la bataille</h1>
+        
+        {% if log is not empty %}
+            <div class="table-responsive">
+                <table class="table table-dark table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Attaquant</th>
+                            <th scope="col">Défenseur</th>
+                            <th scope="col">Résultat</th>
+                            <th scope="col">Détails</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{ log.id }}</th>
+                            <td>{{ log.attacker.name }}</td>
+                            <td>{{ log.defender.name }}</td>
+                            <td>
+                                {% if log.details matches '/armée défensive a été détruite/' %}
+                                    <span class="badge bg-success">Victoire</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Défaite</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#logModal{{ log.id }}">Voir</button>
+                            </td>
+                            <td>{{ log.battleTime|date('d/m/Y H:i') }}</td>
+                        </tr>
+
+                        <!-- Modal pour les détails -->
+                        <div class="modal fade" id="logModal{{ log.id }}" tabindex="-1" aria-labelledby="logModalLabel{{ log.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="logModalLabel{{ log.id }}">Détails de la bataille</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <strong>Attaquant :</strong> {{ log.attacker.name }}<br>
+                                        <strong>Défenseur :</strong> {{ log.defender.name }}<br>
+                                        <strong>Date :</strong> {{ log.battleTime|date('d/m/Y H:i') }}<br>
+                                        <hr>
+                                        <pre>{{ log.details }}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                Aucun log de bataille disponible pour le moment.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Tuile Mystique{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set bootstrapCss = 1%}
+{% set tileMystiqueCss = 1%}
+{% set tileMystiqueJs = 1%}
+{% set reactJs = 1%}
+
+{% block card %}
+    <div class="main-panel">
+        <!-- Inclure les données JSON dans un attribut data-* -->
+        <div id="tile-mystique-root" data-game-data="{{ data|json_encode }}"></div>
+    </div>
+{% endblock %}

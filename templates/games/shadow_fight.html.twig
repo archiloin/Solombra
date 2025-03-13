@@ -1,0 +1,18 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Shadow Fight{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set bootstrapCss = 1%}
+{% set shadowFightCss = 1%}
+{% set shadowFightJs = 1%}
+{% set reactJs = 1%}
+
+{% block card %}
+    <div class="main-panel">
+        <!-- Inclure les données JSON dans un attribut data-* -->
+        <div id="shadow-fight-root" data-game-data="{{ data|json_encode }}"></div>
+    </div>
+{% endblock %}

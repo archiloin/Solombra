@@ -1,0 +1,92 @@
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 20px 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+    position: relative;
+}
+
+.pagination .page-link {
+    background: rgba(108, 92, 231, 0.1);
+    color: #f5f5f5;
+    border: 1px solid rgba(108, 92, 231, 0.4);
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(108, 92, 231, 0.3);
+    text-decoration: none;
+    min-width: 50px;
+    text-align: center;
+}
+
+.pagination .page-link:hover {
+    background: rgba(108, 92, 231, 0.3);
+    box-shadow: 0 0 15px rgba(108, 92, 231, 0.6);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+/* Page active (cercle) */
+.pagination .page-item.active .page-link {
+    background: #6c5ce7;
+    color: #fff;
+    border-color: #6c5ce7;
+    box-shadow: 0 0 15px rgba(108, 92, 231, 0.8);
+    cursor: default;
+    border-radius: 50%;
+}
+
+/* Carré */
+.pagination .page-item.shape-square .page-link {
+    border-radius: 0;
+}
+
+/* Triangle avec icône au centre */
+.pagination .page-item.shape-triangle {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+}
+
+.pagination .page-item.shape-triangle .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+    position: relative;
+}
+
+.pagination .page-item.shape-triangle .page-link::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 30px solid #6c5ce7;
+}
+
+/* Ajout de l'icône bi-eye au centre du triangle */
+.pagination .page-item.shape-triangle .page-link i {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 1.2rem;
+}

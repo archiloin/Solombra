@@ -1,0 +1,24 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Mise à Niveau du Bâtiment{% endblock %}
+
+{% block card %}
+<div class="main-panel">
+    <h1>Mise à Niveau du Bâtiment : {{ building.name }}</h1>
+    <p>Description : {{ building.description }}</p>
+    <p>Niveau actuel : {{ building.level }}</p>
+    <p>Type de ressource produite : {{ building.resourceType }}</p>
+    <p>Production par niveau : {{ building.resourcePerLevel }}</p>
+    <p>Coût de mise à niveau :</p>
+    <ul>
+        {% for resource, cost in building.upgradeCost %}
+            <li>{{ resource }} : {{ cost }}</li>
+        {% endfor %}
+    </ul>
+
+    <form action="{{ path('app_building_upgrade', {'id': building.id}) }}" method="post">
+        <input type="hidden" name="token" value="{{ csrf_token('upgrade' ~ building.id) }}">
+        <button type="submit" class="btn btn-primary">Mettre à Niveau</button>
+    </form>
+</div>
+{% endblock %}

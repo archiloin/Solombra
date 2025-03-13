@@ -1,0 +1,38 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Univers{% endblock %}
+
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set bootstrapCss = 1 %}
+{% set universeCss = 1 %}
+{% set universeJs = 1 %}
+
+{% block card %}
+<div class="main-panel" style="display: flex;">
+    <!-- Canvas principal -->
+    <canvas id="gameCanvas" style="flex: 1; border: 1px solid #ccc;"></canvas>
+
+    <!-- Conteneur de chat -->
+    <div id="chat-container" style="width: 450px; height:800px; display: flex; flex-direction: column; border-left: 1px solid #ccc;">
+        <div id="chat-messages"></div>
+        <div id="chat-input">
+            <input 
+                type="text" 
+                id="messageInput" 
+                placeholder="Écrivez votre message ici...">
+            <button id="sendMessageButton" style="padding: 5px;">Envoyer</button>
+        </div>
+    </div>
+    <div id="character-selection" style="margin-top: 10px;">
+        <label for="characterSelect">Choisissez votre personnage :</label>
+        <select id="characterSelect">
+            <option value="personnage1.png">Personnage 1</option>
+            <option value='personnage2.png'>Personnage 2</option>
+            <option value="personnage3.png">Personnage 3</option>
+        </select>
+        <button id="updateCharacterButton">Changer</button>
+    </div>
+</div>
+
+{% endblock %}

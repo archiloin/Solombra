@@ -1,0 +1,34 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Sélection des Unités{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set unitCss = 1%}
+{% set bootstrapCss = 1%}
+
+{% block card %}
+
+<div class="main-panel">
+    <div class="container selection-panel">
+        <h1>Sélection des Unités</h1>
+        {{ form_start(form) }}
+
+        {% if app.user.selectedEmpire.unit.army %}
+            <div class="unit-selection">
+                <h2>Choisissez vos unités :</h2>
+                {{ form_rest(form) }}
+            </div>
+            <button type="submit" class="btn btn-mystic">Calculer le Temps de Trajet</button>
+        {% else %}
+            <div class="unit-selection">
+                <h2>Vous n'avez aucune unités pour le moment</h2>
+                {{ form_rest(form) }}
+            </div>
+        {% endif %}
+
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

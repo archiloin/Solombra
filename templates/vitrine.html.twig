@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Solombra - Explorez l'inconnu{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set bootstrapCss = 1%}
+
+{% block body %}
+    {% include ('base/header.html.twig') %}
+    <div class="main-panel">
+        <section class="content">
+            <div class="container-fluid text-center">
+
+                <!-- Titre principal avec effet mystique -->
+                <h1 class="game-title mb-4">Bienvenue dans le monde mystérieux de <span>Solombra</span></h1>
+                <p class="game-subtitle">
+                    Plongez dans un univers où magie et ténèbres s'entrelacent. Construisez votre empire, combattez les forces obscures, et forgez votre légende.
+                </p>
+
+                <!-- Texte immersif -->
+                <div class="immersive-text mt-5 text-center">
+                    <p>
+                        Un voile ténu sépare lumière et obscurité, équilibre et chaos. À l'aube de l'éternité,
+                        <br>lorsque les étoiles murmuraient encore leurs secrets aux mondes naissants, une force mystérieuse s'éveilla : <span><strong>Solombra</strong></span>.
+                        <br>Un royaume aux frontières mouvantes, où la magie danse avec les ombres et où chaque souffle peut redessiner les contours du destin.
+                    </p>
+                    <p>
+                        Forgez votre <span>Légende</span>.
+                        <br><br>Allez-vous bâtir un empire radieux, protégé par des murailles imprenables, ou embrasserez-vous les ténèbres pour régner dans l’ombre ?
+                        <br> Le destin de <span><strong>Solombra</strong></span> repose entre vos mains. Osez écrire votre histoire...
+                    </p>
+                </div>
+
+                <!-- Boutons avec effets d'hover -->
+                <div class="btn-group mt-4">
+                    <a href="{{ path('app_login') }}" class="btn btn-mystic">Connexion</a>
+                    <a href="{{ path('app_register') }}" class="btn btn-mystic">Inscription</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Éléments flottants pour l'ambiance mystique -->
+    <div class="floating-elements">
+        <div class="orb orb1"></div>
+        <div class="orb orb2"></div>
+        <div class="orb orb3"></div>
+    </div>
+
+<style>
+    /* Animation et styles pour l'arrière-plan */
+    .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('{{ asset("images/backgrounds/mystic-bg.jpg") }}') no-repeat center center fixed;
+        background-size: cover;
+        z-index: -1;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    /* Animation d'apparition */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Titre principal */
+    .game-title {
+        font-size: 3em;
+        color: #E8E6F1;
+        text-shadow: 0 0 20px rgba(128, 0, 255, 0.8);
+    }
+
+    .game-title span {
+        color: #9F70FF;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+    }
+
+    p span {
+        color: #9F70FF;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+    }
+
+    .game-subtitle {
+        font-size: 1.2em;
+        color: #CCC;
+        margin: 10px 0;
+    }
+
+    /* Texte immersif */
+    .immersive-text {
+        font-size: 1em;
+        color: #D8D8E8;
+        line-height: 1.6;
+        text-align: justify;
+        margin: 20px 0;
+        padding: 20px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(128, 0, 255, 0.5);
+    }
+
+    /* Boutons stylisés */
+    .btn-mystic {
+        background: linear-gradient(135deg, #6D3DBE, #B07DFF);
+        border: none;
+        color: #21065e !important;
+        font-size: 1.1em;
+        padding: 10px 20px;
+        text-transform: uppercase;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-mystic:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(128, 0, 255, 0.7);
+    }
+
+    /* Orbes flottants pour l'effet immersif */
+    .floating-elements .orb {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(128, 0, 255, 0.6);
+        box-shadow: 0 0 20px rgba(128, 0, 255, 0.9);
+        animation: float 5s infinite alternate;
+    }
+
+    .orb1 {
+        width: 100px;
+        height: 100px;
+        top: 20%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .orb2 {
+        width: 150px;
+        height: 150px;
+        bottom: 15%;
+        right: 15%;
+        animation-delay: 1s;
+    }
+
+    .orb3 {
+        width: 80px;
+        height: 80px;
+        top: 50%;
+        right: 5%;
+        animation-delay: 2s;
+    }
+
+    @keyframes float {
+        from {
+            transform: translateY(0) rotate(0deg);
+        }
+        to {
+            transform: translateY(-20px) rotate(15deg);
+        }
+    }
+</style>
+{% endblock %}

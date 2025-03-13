@@ -1,0 +1,47 @@
+# Désactiver les tags PHP courts, les globales enregistrées, les guillemets magiques, le démarrage automatique de session
+SetEnv SHORT_OPEN_TAGS 0
+SetEnv REGISTER_GLOBALS 0
+SetEnv MAGIC_QUOTES 0
+SetEnv SESSION_AUTOSTART 0
+SetEnv ZEND_OPTIMIZER 1
+
+# Gestion du cache pour les fichiers CSS
+<FilesMatch "\.(css)$">
+Header set Cache-Control "max-age=0"
+</FilesMatch>
+
+# Activer la réécriture d'URL
+RewriteEngine on
+RewriteBase /
+
+# Redirection des requêtes vers le dossier /public si elles ne commencent pas par /public
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{HTTP_HOST} solombra\.fr [NC]
+RewriteRule ^(.*)$ /public/$1 [L]
+
+# En-têtes de sécurité
+# X-Frame-Options pour prévenir les attaques de clickjacking
+Header always append X-Frame-Options SAMEORIGIN
+
+# X-XSS-Protection pour activer le mode de protection XSS dans les navigateurs
+Header set X-XSS-Protection "1; mode=block"
+
+# X-Content-Type-Options pour prévenir les attaques basées sur le MIME sniffing
+Header set X-Content-Type-Options nosniff
+
+# Strict-Transport-Security pour forcer le navigateur à utiliser HTTPS
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=2592000" # 30 jours
+</IfModule>

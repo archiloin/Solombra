@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersion 360° avec Easter Egg</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        canvas {
+            display: block;
+        }
+        /* Style pour le texte "Solombra" */
+        #easter-egg h1 {
+            font-size: 10vw;
+            font-family: 'Arial Black', sans-serif;
+            color: #ffffff;
+            text-transform: uppercase;
+            position: relative;
+            letter-spacing: 0.5vw;
+            text-shadow:
+                0px 0px 15px rgba(255, 255, 255, 0.8), /* Lueur externe blanche */
+                -5px -5px 20px rgba(0, 0, 0, 0.9), /* Ombre noire profonde */
+                5px 5px 30px rgba(50, 50, 50, 0.5); /* Ombre douce */
+            animation: glow 3s infinite alternate; /* Effet de pulsation lumineuse */
+        }
+
+        /* Effet de lumière douce */
+        @keyframes glow {
+            0% {
+                text-shadow:
+                    0px 0px 5px rgba(255, 255, 255, 0.5),
+                    -5px -5px 10px rgba(0, 0, 0, 0.7),
+                    5px 5px 15px rgba(50, 50, 50, 0.3);
+                color: #bbbbbb;
+            }
+            100% {
+                text-shadow:
+                    0px 0px 30px rgba(255, 255, 255, 1),
+                    -10px -10px 20px rgba(0, 0, 0, 1),
+                    10px 10px 40px rgba(50, 50, 50, 0.8);
+                color: #ffffff;
+            }
+        }
+
+        /* Conteneur centré pour le texte */
+        #easter-egg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none; /* Masqué par défaut */
+        }
+    </style>
+</head>
+<body>
+    <!-- Texte pour l'easter egg -->
+    <div id="easter-egg">
+        <h1>Solombra</h1>
+    </div>
+
+    <script type="module">
+        import * as THREE from "https://unpkg.com/three@0.112/build/three.module.js";
+        import { PointerLockControls } from "https://unpkg.com/three@0.112/examples/jsm/controls/PointerLockControls.js";
+
+        let camera, scene, renderer, controls;
+        let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+        let velocity = new THREE.Vector3();
+        let direction = new THREE.Vector3();
+        const easterEggText = document.getElementById("easter-egg");
+
+        init();
+        animate();
+
+        function init() {
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            // Scene
+            scene = new THREE.Scene();
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            // PointerLockControls (contrôles FPS)
+            controls = new PointerLockControls(camera, document.body);
+
+            // Activation du verrouillage du pointeur
+            document.addEventListener("click", () => controls.lock());
+
+            // Lumière ambiante
+            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+
+            // Sphère panoramique
+            const sphereGeometry = new THREE.SphereGeometry(500, 60, 40);
+            const sphereMaterial = new THREE.MeshBasicMaterial({ side: THREE.BackSide });
+
+            const textureLoader = new THREE.TextureLoader();
+            textureLoader.load(
+                "3.webp", // Remplacez par votre image panoramique
+                (texture) => {
+                    sphereMaterial.map = texture;
+                    sphereMaterial.needsUpdate = true;
+                },
+                undefined,
+                (error) => {
+                    console.error("Erreur lors du chargement de la texture :", error);
+                }
+            );
+
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            scene.add(sphere);
+
+            // Gestion des touches pour le déplacement
+            document.addEventListener("keydown", onKeyDown);
+            document.addEventListener("keyup", onKeyUp);
+
+            // Gestion du redimensionnement
+            window.addEventListener("resize", onWindowResize);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (controls.isLocked) {
+                // Gestion des déplacements
+                direction.z = Number(moveForward) - Number(moveBackward);
+                direction.x = Number(moveRight) - Number(moveLeft);
+                direction.normalize(); // Normalisation pour une vitesse constante
+
+                const speed = 5.0; // Vitesse de déplacement
+                velocity.z -= direction.z * speed * 0.1;
+                velocity.x -= direction.x * speed * 0.1;
+
+                // Mise à jour de la position de la caméra
+                controls.moveRight(-velocity.x);
+                controls.moveForward(-velocity.z);
+
+                // Diminuer progressivement la vitesse (freinage)
+                velocity.multiplyScalar(0.9);
+            }
+
+            // Vérifier la position de la caméra pour déclencher l'easter egg
+            checkEasterEgg();
+
+            renderer.render(scene, camera);
+        }
+
+        function onKeyDown(event) {
+            switch (event.code) {
+                case "ArrowUp":
+                case "KeyW":
+                    moveForward = true;
+                    break;
+                case "ArrowDown":
+                case "KeyS":
+                    moveBackward = true;
+                    break;
+                case "ArrowLeft":
+                case "KeyA":
+                    moveLeft = true;
+                    break;
+                case "ArrowRight":
+                case "KeyD":
+                    moveRight = true;
+                    break;
+            }
+        }
+
+        function onKeyUp(event) {
+            switch (event.code) {
+                case "ArrowUp":
+                case "KeyW":
+                    moveForward = false;
+                    break;
+                case "ArrowDown":
+                case "KeyS":
+                    moveBackward = false;
+                    break;
+                case "ArrowLeft":
+                case "KeyA":
+                    moveLeft = false;
+                    break;
+                case "ArrowRight":
+                case "KeyD":
+                    moveRight = false;
+                    break;
+            }
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function checkEasterEgg() {
+            // Détecter si la caméra est suffisamment loin pour ressembler à un croissant de lune
+            if (camera.position.length() > 1350) { // Si la caméra est à plus de 1350 unités du centre
+                easterEggText.style.display = "block"; // Afficher le texte
+            } else {
+                easterEggText.style.display = "none"; // Masquer le texte
+            }
+        }
+    </script>
+</body>
+</html>

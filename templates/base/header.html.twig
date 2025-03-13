@@ -1,0 +1,88 @@
+<style>
+.red-light {
+    animation: blink 1s infinite alternate;
+    filter: drop-shadow(0 0 10px #f20000) !important; /* Ombre portée pour un effet de glow */
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+</style>
+    <header class="header-custom">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ path('app_home') }}">
+                    <div class="logo">
+                        <img src="{{ asset('images/core/logo_min.png') }}" alt="Solombra Logo">
+                    </div>
+                </a>
+
+                {% if app.user %}
+                
+                <div id="resources" class="resources">
+                    {% for resource in app.user.selectedEmpire.resources %}
+                        <span class="editable" data-resource-id="{{ resource.id }}">{{ resource.name }}</span> {{ resource.quantity }} <img src="{{ asset(resource.info.image) }}" class="resources-img" alt="{{ resource.name }}">
+                    {% endfor %}
+                    Solumns: <span>{{ app.user.solumns }}</span> <img src="{{ asset('images/resource/solumns_min.png') }}" class="resources-img" alt="Solums">
+                    {{ app.user.username }}
+                    <a href="{{ path('app_radar') }}">
+                        {% set ongoingAction = app.user.selectedEmpire.targetActions|filter(action => action.status == 'En cours')|length > 0 %}
+                        
+                        {% if ongoingAction %}
+                            <img src="{{ asset('images/core/radar-red_min.png') }}" class="red-light" alt="Radar">
+                        {% else %}
+                            <img src="{{ asset('images/core/radar_min.png') }}" alt="Radar">
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="logout">
+                    {% if app.user %}
+                      <a href="{{ path('app_logout') }}"><button type="button" class="btn btn-outline-custom me-2">Déconnexion</button></a>
+                    {% endif %}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+<script>
+    var csrfToken = '{{ csrf_token('edit-resource') }}'; // 'edit-resource' est l'intention
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.editable').forEach(function(element) {
+        element.addEventListener('dblclick', function() {
+            this.setAttribute('contenteditable', 'true');
+            this.focus();
+        });
+        
+        element.addEventListener('blur', function() {
+            this.removeAttribute('contenteditable');
+            
+            // Envoi de la valeur mise à jour au serveur avec le token CSRF
+            const resourceId = this.getAttribute('data-resource-id');
+            const updatedName = this.textContent;
+            
+            fetch('/update-resource-name/' + resourceId, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken // Utilisez le token CSRF généré
+                },
+                body: JSON.stringify({name: updatedName})
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Nom de la ressource mis à jour avec succès.');
+                } else {
+                    console.error('Erreur lors de la mise à jour du nom de la ressource.');
+                }
+            });
+        });
+    });
+});
+</script>

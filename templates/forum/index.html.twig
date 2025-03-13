@@ -1,0 +1,52 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set forumCss = 1 %}
+{% set bootstrapCss = 1 %}
+
+{% block card %}
+
+    <div class="main-panel">
+
+        <section class="forum">
+            <header class="header mb-4 text-center">
+                <h6 class="data-purple-h2 fw-bold">{{ forum.name }}</h6>
+            </header>
+            {% if topics is not empty %}
+                <ul class="list-unstyled">
+                    {% set displayedCategories = [] %}
+                    
+                    {% for topic in topics %}
+                        {% if topic.category.name not in displayedCategories %}
+                            <li class="category-header fw-bold text-uppercase mt-3 mb-2">
+                                {{ topic.category.name }}
+                            </li>
+                            {% set displayedCategories = displayedCategories|merge([topic.category.name]) %}
+                        {% endif %}
+
+                        <li class="topic-item">
+                            <a href="{{ path('app_forum_topic', { id: topic.id }) }}" class="topic-link">
+                                <h5 class="fw-bold text-mystic mb-1">{{ topic.name }}</h5>
+                                <p class="text-muted small mb-2">{{ topic.description }}</p>
+                                <div class="topic-meta">
+                                    <span class="text-highlight"><i class="bi bi-chat-dots"></i> {{ topic.posts|length }} Posts</span>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <ul class="list-unstyled">
+                    <li class="alert alert-warning text-center" role="alert">
+                        <i class="bi bi-exclamation-triangle"></i> Aucune catégorie disponible pour le moment.
+                    </li>
+                </ul>
+            {% endif %}
+        </section>
+
+    </div>
+{% endblock %}

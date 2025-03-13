@@ -1,0 +1,93 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Fréquence Psy Ψ{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set bootstrapCss = 1%}
+
+{% block card %}
+<style>
+.form-control{
+    width: 33%;
+    margin: 0 auto;
+}
+
+</style>
+<div class="main-panel text-center">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="info-box">
+                <h3>Information Importante</h3>
+                <p>
+                    Ce générateur est temporairement indisponible. Le serveur nécessite quelques ajustements financiers avant de pouvoir relancer le programme. 
+                    Bientôt, grâce à Solombra, vous pourrez communiquer avec vos amis en utilisant des fréquences spécialement adaptées à leur perception auditive.
+                </p>
+                <p>
+                    <strong style='color:red'>Attention : ce générateur est un outil unique et confidentiel, régulé sous la supervision <h3>Ψ</h3>. Dans certains cas, des personnes ont été internées en raison de l’utilisation inappropriée de dispositifs similaires. 
+                    Nous vous recommandons de toujours informer vos interlocuteurs avant d'utiliser ce générateur et de ne jamais cacher son utilisation.</strong>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h1>Générateur d'Audio Fréquence</h1>
+            <form id="audio-form" method="get" action="{{ path('audio_generate') }}">
+                <div class="form-group">
+                    <label for="message">Message :</label>
+                    <input type="text" id="message" name="message" class="form-control" value="Bonjour, ceci est un test." required>
+                </div>
+                <div class="form-group">
+                    <label for="frequency">Fréquence (Hz) :</label>
+                    <input type="number" id="frequency" name="frequency" class="form-control" value="20000" min="20" max="22000" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Générer</button>
+            </form>
+            <div class="mt-4">
+                <audio id="audio-player" controls>
+                    <source id="audio-source" src="" type="audio/wav">
+                    Votre navigateur ne supporte pas la lecture audio.
+                </audio>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('audio-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const params = new URLSearchParams(new FormData(form));
+        const audioSource = document.getElementById('audio-source');
+        const audioPlayer = document.getElementById('audio-player');
+
+        try {
+            // Génération de l'URL pour la requête
+            const generatedUrl = form.action + '?' + params.toString();
+            console.log('URL générée :', generatedUrl);
+
+            // Récupération de l'audio via une requête GET
+            const response = await fetch(generatedUrl);
+
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP : ${response.status}`);
+            }
+
+            // Mise à jour de la source de l'audio
+            audioSource.src = generatedUrl;
+            audioPlayer.load();
+
+            // Lecture automatique après chargement
+            audioPlayer.play().catch(error => {
+                console.error('Erreur lors de la lecture automatique :', error);
+                alert('Impossible de lire l\'audio automatiquement. Cliquez sur play.');
+            });
+
+        } catch (error) {
+            console.error('Erreur :', error);
+            alert('Une erreur est survenue lors de la génération de l\'audio.');
+        }
+    });
+</script>
+{% endblock %}

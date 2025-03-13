@@ -1,0 +1,115 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}{{ topic.name }}{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set forumCss = 1 %}
+{% set bootstrapCss = 1 %}
+{% set bootstrapIcons = 1 %}
+{% set paginationCss = 1 %}
+
+{% block card %}
+    <div class="main-panel">
+        <section class="forum">
+            <header class="header mb-4 text-center">
+                <h2 class="data-purple-h2 fw-bold">{{ topic.category.name }}</h2>
+            </header>
+            <a href="{{ path('app_forum_post_new', { topicId: topic.id }) }}" class="d-flex align-items-center flex-grow-1 justify-content-end">
+                <i class="bi bi-plus-circle-dotted"></i>&nbsp;Créer un nouveau sujet
+            </a>
+
+            {% if posts is not empty %}
+                <ul class="list-unstyled">
+                    {% set displayedCategories = [] %}
+
+                    {% for post in pagination.items %}
+                        {% if post.topic.name not in displayedCategories %}
+                            <li class="category-header fw-bold text-uppercase mt-3 mb-2">
+                                {{ post.topic.name }} 
+                            </li>
+                            {% set displayedCategories = displayedCategories|merge([post.topic.name]) %}
+                        {% endif %}
+
+
+                        <li class="topic-item">
+                            <a href="{{ path('app_forum_post', { id: post.id }) }}" class="topic-link">
+                                <h5 class="fw-bold text-mystic mb-1">{{ post.title }}</h5>
+                                <p class="text-muted small mb-2">{{ post.content|slice(0, 100) ~ '...' }}</p>
+                                <div class="topic-meta">
+                                    <ul class="list-unstyled small text-muted d-flex justify-content-between align-items-center flex-wrap">
+                                        <li class="d-flex align-items-center flex-grow-1">
+                                            <i class="bi bi-person"></i>
+                                            <span class="ms-1">Auteur : {{ post.getAuthor().getUsername() }}</span>
+                                        </li>
+
+                                        <li class="d-flex align-items-center flex-grow-1 justify-content-center">
+                                            <i class="bi bi-eye"></i>
+                                            <span class="ms-1">Vues : {{ post.viewCount }}</span>
+                                            <span class="mx-2">|</span>
+                                            <i class="bi bi-chat-dots"></i>
+                                            <span class="ms-1">Réponses : {{ post.replyCount }}</span>
+                                        </li>
+
+                                        <li class="d-flex align-items-center flex-grow-1 justify-content-end">
+                                            <i class="bi bi-calendar"></i>
+                                            <span class="ms-1">Publié le : {{ post.createdAt|date('d/m/Y H:i') }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        <i class="bi bi-exclamation-circle"></i> Aucun sujet disponible dans cette catégorie.
+                    </div>
+                </div>
+            {% endif %}
+
+            {# Système de pagination Bootstrap #}
+            <div class="pagination text-center mt-4">
+                {% if pagination.pageCount > 1 %}
+                    <nav>
+                        <ul class="pagination">
+                            {% if pagination.currentPageNumber > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('app_forum_topic', { id: topic.id, page: pagination.currentPageNumber - 1 }) }}">
+                                        &laquo; Précédent
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% for p in 1..pagination.pageCount %}
+                                <li class="page-item 
+                                    {% if p == pagination.currentPageNumber %} active 
+                                    {% elseif p == pagination.currentPageNumber + 1 %} shape-square 
+                                    {% elseif p == pagination.currentPageNumber + 2 %} shape-triangle 
+                                    {% endif %}">
+                                    <a class="page-link" href="{{ path('app_forum_topic', { id: topic.id, page: p }) }}">
+                                        {% if p == pagination.currentPageNumber + 2 %}
+                                            <i class="bi bi-eye"></i>
+                                        {% else %}
+                                            {{ p }}
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+
+                            {% if pagination.currentPageNumber < pagination.pageCount %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ path('app_forum_topic', { id: topic.id, page: pagination.currentPageNumber + 1 }) }}">
+                                        Suivant &raquo;
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

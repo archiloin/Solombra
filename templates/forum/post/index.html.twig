@@ -1,0 +1,161 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set bootstrapCss = 1 %}
+{% set bootstrapIcons = 1 %}
+{% set forumCss = 1 %}
+{% set paginationCss = 1 %}
+
+{% block card %}
+
+    <div class="main-panel forum-messages">
+
+        <section class="forum-messages">
+            <header class="header mb-4 text-center">
+                <h2 class="data-purple-h2 fw-bold">{{ post.topic.name }} <i class="bi bi-moon-stars"></i></h2>
+            </header>
+            <div class="messages-container">
+                {# Affichage du post initial de l'auteur en premier #}
+                <div class="message-item author-post">
+                    <div class="message-header">
+                        <div class="user-info">
+                            {#<img src="{{ post.getAuthor().getAvatar() }}" alt="Avatar" class="user-avatar">#}
+                            <div class="user-details">
+                                <span class="username text-warning">{{ post.getAuthor().getUsername() }}</span>
+                                <span class="user-role">Auteur</span>
+                                <span class="post-date">{{ post.createdAt|date('d/m/Y H:i') }}</span>
+                            </div>
+                        </div>
+                        <div class="message-actions">
+                            {% if post.getAuthor() == app.user %}
+                                    <a href="{{ path('app_forum_post_edit', { id: post.id }) }}" class="btn btn-outline-light btn-sm">
+                                        <i class="bi bi-pencil-square"></i> Modifier
+                                    </a>
+                            {% endif %}
+                            <br>
+                            {% if post.edited %}
+                                <span class="edited-label">Modifié le :</span>
+                                <span class="post-date">{{ post.updatedAt|date('d/m/Y H:i') }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="message-content">
+                        <p>{{ post.content|nl2br }}</p>
+                    </div>
+
+                    <div class="message-footer">
+                        <div class="post-stats">
+                            <span><i class="bi bi-eye"></i> {{ post.viewCount }} Vues</span>
+                        </div>
+                    </div>
+                </div>
+
+                {# Affichage des réponses avec pagination #}
+                {% for message in pagination.items %}
+                    <div class="message-item">
+                        <div class="message-header">
+                            <div class="user-info">
+                                <div class="user-details">
+                                    <span class="username">{{ message.author.username }}</span>
+                                    <span class="post-date">{{ message.publishAt|date('d/m/Y H:i') }}</span>
+                                </div>
+                            </div>
+                            <div class="message-actions">
+                                {% if message.getAuthor() == app.user %}
+                                    <a href="{{ path('app_forum_message_edit', { id: message.id }) }}" class="btn btn-outline-light btn-sm">
+                                        <i class="bi bi-pencil-square"></i> Modifier
+                                    </a>
+                                {% endif %}
+                                <br>
+                                {% if message.edited %}
+                                    <span class="edited-label">Modifié le :</span>
+                                    <span class="post-date">{{ message.updatedAt|date('d/m/Y H:i') }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="message-content">
+                            <p>{{ message.content|nl2br }}</p>
+                        </div>
+
+                        <div class="message-footer">
+                            <div class="post-stats">
+                                <span><i class="bi bi-chat-dots"></i> Réponses</span>
+                            </div>
+                            <div class="actions">
+                                <a href="#" class="btn btn-outline-light btn-sm"><i class="bi bi-reply"></i> Répondre</a>
+                                <a href="{{ path('app_forum_report', { postId: post.id, messageId: message.id }) }}" class="btn btn-outline-danger btn-sm"><i class="bi bi-flag"></i> Signaler</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {# Système de pagination Bootstrap #}
+                <div class="pagination text-center mt-4">
+                    {% if pagination.pageCount > 1 %}
+                        <nav>
+                            <ul class="pagination">
+                                {% if pagination.currentPageNumber > 1 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('app_forum_post', { id: post.id, page: pagination.currentPageNumber - 1 }) }}">
+                                            &laquo; Précédent
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {% for p in 1..pagination.pageCount %}
+                                    <li class="page-item 
+                                        {% if p == pagination.currentPageNumber %} active 
+                                        {% elseif p == pagination.currentPageNumber + 1 %} shape-square 
+                                        {% elseif p == pagination.currentPageNumber + 2 %} shape-triangle 
+                                        {% endif %}">
+                                        <a class="page-link" href="{{ path('app_forum_post', { id: post.id, page: p }) }}">
+                                            {% if p == pagination.currentPageNumber + 2 %}
+                                                <i class="bi bi-eye"></i>
+                                            {% else %}
+                                                {{ p }}
+                                            {% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if pagination.currentPageNumber < pagination.pageCount %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ path('app_forum_post', { id: post.id, page: pagination.currentPageNumber + 1 }) }}">
+                                            Suivant &raquo;
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    {% endif %}
+                </div>
+                <div class="message-item">
+                    <div class="card-body">
+                        {{ form_start(form, { 'attr': { 'class': 'needs-validation', 'novalidate': 'novalidate' } }) }}
+
+                        <div class="mb-3 message-content">
+                            {{ form_label(form.content, 'Répondre :', { 'label_attr': { 'class': 'form-label' } }) }}
+                            {{ form_widget(form.content, { 'attr': { 'class': 'form-control', 'rows': 5, 'style': 'background-color:#000;color:#fff;',} }) }}
+                            <div class="invalid-feedback">
+                                {{ form_errors(form.content) }}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-mystic">
+                            <i class="bi bi-check-circle"></i> Publier
+                        </button>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}

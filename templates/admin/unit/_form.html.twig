@@ -1,0 +1,85 @@
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.name) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.description) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.birthCostOne, ( app.user.selectedEmpire.resources[0].info.id )) }}
+            {{ form_widget(form.birthCostOne) }}
+            {{ form_errors(form.birthCostOne) }}
+
+            {{ form_label(form.birthCostTwo, ( app.user.selectedEmpire.resources[1].info.id )) }}
+            {{ form_widget(form.birthCostTwo) }}
+            {{ form_errors(form.birthCostTwo) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.forces, ('Forces :')) }}
+            {{ form_widget(form.forces) }}
+            {{ form_errors(form.forces) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.birthTime) }}
+            {{ form_widget(form.birthTime, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.birthTime) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.health) }}
+            {{ form_widget(form.health, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.health) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.attack) }}
+            {{ form_widget(form.attack, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.attack) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.defence) }}
+            {{ form_widget(form.defence, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.defence) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.endurance) }}
+            {{ form_widget(form.endurance, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.endurance) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.shield) }}
+            {{ form_widget(form.shield, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.shield) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.speed) }}
+            {{ form_widget(form.speed, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.speed) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.stockage) }}
+            {{ form_widget(form.stockage, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.stockage) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.image) }}
+        </div>
+
+        <button type="submit" class="btn btn-mystic">Enregistrer</button>
+    {{ form_end(form) }}

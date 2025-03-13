@@ -1,0 +1,87 @@
+header {
+    padding: 1rem 0;
+    background-color: #222;
+    border-bottom: 2px solid #444;
+    z-index: 1;
+    position: relative;
+}
+
+.logo img {
+    position: fixed;
+    top: -50px;
+    left: 0;
+    width: 200px;
+    z-index: 2;
+}
+
+.header-custom {
+    position: fixed;
+    top:  0;
+    right: 0;
+    width: 100%;
+    background-color: var(--color-dark);
+    color: var(--color-light);
+    font-family: 'MedievalSharp', cursive;
+    text-shadow: 2px 2px 4px #000; /* Ombre portée pour le titre */
+  }
+  
+  .resources {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espace entre les éléments */
+    font-size: 1.2rem; /* Taille de police plus grande pour plus de visibilité */
+  }
+  
+  .resources span {
+    color: var(--color-highlight); /* Couleur de surbrillance pour les nombres */
+    font-weight: bold; /* Gras pour les nombres */
+  }
+  
+  .resources img {
+    width: 40px; /* Taille un peu plus grande pour les images */
+    height: auto; /* Hauteur automatique pour conserver les proportions */
+    filter: drop-shadow(0 0 10px var(--color-highlight)); /* Ombre portée pour un effet de glow */
+    transition: transform var(--transition-speed) ease; /* Animation pour les hover */
+  }
+  
+  .resources img:hover {
+    transform: scale(1.1); /* Agrandir légèrement l'image au survol */
+  }
+  
+  .logo img {
+    /* Reste de vos styles, potentiellement ajout d'un glow */
+    filter: drop-shadow(0 0 20px var(--color-highlight));
+  }
+  
+  /* Styles pour les boutons de déconnexion/connexion/inscription */
+  .logout .btn-outline-custom, .logout .btn-warning-custom {
+    font-size: 1rem;
+    padding: 0.5rem 1rem; /* Plus de padding pour un bouton plus grand */
+    border-radius: 2rem; /* Boutons arrondis */
+    text-transform: uppercase; /* Texte en majuscules */
+    letter-spacing: 1px; /* Espacement des lettres */
+  }
+  
+
+.header-custom {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+}
+.header-custom .btn-outline-custom {
+    border-color: var(--color-mystic);
+    color: var(--color-light);
+    transition: all var(--transition-speed) ease;
+}
+.header-custom .btn-outline-custom:hover {
+    background-color: var(--color-mystic);
+    color: var(--color-light);
+}
+.header-custom .btn-warning-custom {
+    background-color: var(--color-mystic);
+    color: var(--color-dark);
+    transition: background-color var(--transition-speed) ease;
+}
+.header-custom .btn-warning-custom:hover {
+    background-color: darken (var(--color-mystic), 10%);
+    color: var(--color-mystic);
+}

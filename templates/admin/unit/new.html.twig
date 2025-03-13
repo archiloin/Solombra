@@ -1,0 +1,16 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Gestion des Unités - Solombra{% endblock %}
+
+{% block card %}
+    <div class="main-panel">
+        <section class="content">
+            <div class="container-fluid">
+                <h1>Gestion des Unités</h1>
+
+                {{ include('admin/unit/_form.html.twig') }}
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

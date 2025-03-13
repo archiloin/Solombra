@@ -1,0 +1,44 @@
+.main-panel {
+    width: 78%;
+    float: left;
+    margin-left: 3%; /* Ajout d'un espace entre l'action panel et le main */
+    background-color: #222; /* Couleur de fond */
+    border-radius: 10px; /* Bords arrondis pour adoucir l'aspect de la carte */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Ombre pour un effet de profondeur */
+    color: var(--color-light); /* Couleur du texte */
+    padding: 20px; /* Espace intérieur pour ne pas coller le contenu aux bords */
+    overflow: hidden; /* Assure que tout le contenu reste à l'intérieur des bords arrondis */
+    transition: all var(--transition-speed) ease; /* Transition douce pour les interactions */
+    border: 1px solid var(--color-mystic); /* Bordure subtile pour délimiter le panneau */
+}
+
+/* Ajoutez des styles pour les éléments à l'intérieur de votre .main-panel ici */
+/* Par exemple, pour les titres, les listes, ou autres éléments que vous avez à l'intérieur */
+
+.main-panel h1, .main-panel h2, .main-panel h3 {
+    color: var(--color-highlight); /* Met en évidence les titres */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Ombre portée pour les titres */
+}
+
+.main-panel ul {
+    list-style-type: none; /* Enlève les puces */
+}
+
+.main-panel li {
+    padding: 5px 0; /* Espacement entre les éléments de liste */
+    border-bottom: 1px solid var(--color-mystic); /* Bordure subtile pour chaque élément */
+}
+
+.main-panel li:last-child {
+    border-bottom: none; /* Pas de bordure pour le dernier élément */
+}
+
+.main-panel a {
+    color: var(--color-highlight); /* Lien avec la couleur de surbrillance */
+    text-decoration: none; /* Enlève le soulignement des liens */
+    transition: color var(--transition-speed) ease; /* Transition douce pour les interactions des liens */
+}
+
+.main-panel a:hover {
+    color: var(--color-light); /* Couleur au survol */
+}

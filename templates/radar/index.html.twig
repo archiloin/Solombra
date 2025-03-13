@@ -1,0 +1,90 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Radar{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1 %}
+{% set heroCss = 1 %}
+{% set modalCss = 1 %}
+{% set bootstrapCss = 1 %}
+{% set bootstrapJs = 1 %}
+
+{% block card %}
+    <div class="main-panel text-center">
+        <h2>Actions initiées par votre empire</h2>
+        {% if initiatedActions is empty %}
+            <p>Aucune action en cours.</p>
+        {% else %}
+            <ul>
+                {% for action in initiatedActions %}
+                    <li>
+                        {{ action.name }} -
+                        Cible: {{ action.target.name }} - 
+                        <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#actionModal{{ action.id }}">Voir</button>
+
+                        <!-- Modal pour les détails -->
+                        <div class="modal fade" id="actionModal{{ action.id }}" tabindex="-1" aria-labelledby="actionModalLabel{{ action.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="actionModalLabel{{ action.id }}">Détails de la bataille</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <pre>{{ action.formattedDetails }}</pre>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        Fin prévue: <span id="countdown-{{ action.id }}" data-upgrade-end-time="{{ action.endTime.timestamp }}"></span>
+                        <script>
+                            // Définir le texte global avant le chargement du script
+                            window.customTextContent = 'Attaque terminée !';
+                        </script>
+                        <script src="{{ asset('js/countdown.js') }}"></script>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <h2>Actions dirigées contre votre empire</h2>
+        {% if targetedActions is empty %}
+            <p>Aucune action en cours.</p>
+        {% else %}
+            <ul>
+                {% for action in targetedActions %}
+                    <li>
+                        {{ action.name }} - 
+                        Initiateur: {{ action.empire.name }} - 
+                        <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#actionModal{{ action.id }}">Voir</button>
+
+                        <!-- Modal pour les détails -->
+                        <div class="modal fade" id="actionModal{{ action.id }}" tabindex="-1" aria-labelledby="actionModalLabel{{ action.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="actionModalLabel{{ action.id }}">Détails de l'attaque reçue</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <pre>{{ action.formattedDetails }}</pre>
+                                        <hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        Fin prévue: <span id="countdown-{{ action.id }}" data-upgrade-end-time="{{ action.endTime.timestamp }}"></span>
+                        <script>
+                            // Définir le texte global avant le chargement du script
+                            window.customTextContent = 'Attaque terminée !';
+                        </script>
+                        <script src="{{ asset('js/countdown.js') }}"></script>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

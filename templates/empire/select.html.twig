@@ -1,0 +1,78 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Solombra{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set bootstrapCss = 1%}
+
+{% block card %}
+    <div class="main-panel">
+        <div class="heroes-selection">
+            <a href="{{ path('app_map', {'dimension': 1} )}}">
+                <div class="hero-container">
+                    <img class="hero" src="{{ asset('images/hero/0.webp') }}" alt="Nouvelle Héro" data-hero-id="0">
+                    <div class="hero-description" id="description-0">
+                        <h3>Conquis un empire pour créer un nouveau Héro</h3>
+                        <p>Chaque héro possédent son propre empire et ressource, colonise une zone pour en crée un nouveau et étendre ton territoire.</p>
+                    </div>
+                </div>
+            </a>
+            {% for empire in empires %}
+            <div class="hero-container">
+                <img class="hero" src="{{ asset(empire.hero.info.image) }}" alt="hero - {{ empire.hero.info.name }}" data-hero-id="{{ empire.id }}">
+                <div class="hero-description" id="description-{{ empire.id }}" style="display: none;">
+                    <h3>{{ empire.hero.info.name }}</h3>
+                    <p>{{ empire.hero.info.description }}</p>
+                    <form method="post" action="{{ path('app_select_empire', {'empireId': empire.id}) }}">
+                        <button type="submit" class="select-hero-button">Sélectionner cet Empire</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+<style>
+    .content {
+        margin: 2rem 0;
+    }
+
+    .container-fluid {
+        margin: auto;
+        position: relative;
+        text-align: center; /* Centre les images des héros */
+    }
+
+</style>
+<script>
+    document.querySelectorAll('.hero').forEach(function(heroImg) {
+        heroImg.addEventListener('click', function() {
+            var heroId = this.getAttribute('data-hero-id');
+            var descriptions = document.querySelectorAll('.hero-description');
+            // Hide all descriptions except for description-0
+            descriptions.forEach(function(desc) {
+                if (desc.id !== 'description-0') {
+                    desc.style.display = 'none';
+                }
+            });
+            // Show the clicked hero's description if it's not description-0
+            if (heroId !== '0') {
+                var description = document.getElementById('description-' + heroId);
+                description.style.display = 'block';
+            }
+        });
+    });
+
+    document.querySelectorAll('.select-hero').forEach(function(selectButton) {
+        selectButton.addEventListener('click', function() {
+            var heroId = this.getAttribute('data-hero-id');
+            // Logic to handle hero selection
+            console.log('Empire selected: ' + heroId);
+            // You might want to make an AJAX request here or update the session
+        });
+    });
+</script>
+
+{% endblock %}

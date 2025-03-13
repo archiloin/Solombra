@@ -1,0 +1,34 @@
+
+<div class="hero-container-selected">
+    <div class="backdrop"></div> <!-- Élément pour l'effet de lumière de fond -->
+    <div class="level-up-text">Level Up!</div> <!-- Élément pour le texte "Level Up" -->
+    
+    <a href="{{ path('app_select_empire_page') }}">
+        <img class="hero" src="{{ asset(app.user.selectedEmpire.hero.info.image) }}" alt="Destructeur" data-hero-id="{{ app.user.selectedEmpire.hero.id }}">
+        <div class="hero-info">
+            Nom : {{ app.user.selectedEmpire.hero.name }}<br>
+            <!-- Barre de santé -->
+            <div class="health-bar">
+                <div class="health-bar-fill" 
+                    style="width: {{ (app.user.selectedEmpire.hero.health / (app.user.selectedEmpire.hero.level * 30)) * 100 }}%;"
+                    data-current-health="{{ app.user.selectedEmpire.hero.health }}" 
+                    data-max-health="{{ app.user.selectedEmpire.hero.level * 30 }}"></div>
+                <div class="health-text">Santé : {{ app.user.selectedEmpire.hero.health }} / {{ app.user.selectedEmpire.hero.level * 30 }}</div>
+            </div>
+            Humeur : {{ app.user.selectedEmpire.hero.mood }}<br>
+            Endurance : {{ app.user.selectedEmpire.hero.endurance }}<br>
+            Dégâts : {{ app.user.selectedEmpire.hero.damage }}<br>
+            
+            <!-- Barre d'XP -->
+            <div class="xp-bar">
+                <div class="xp-bar-fill" 
+                    style="width: {{ (app.user.selectedEmpire.hero.xp / app.user.selectedEmpire.hero.getXpRequiredForNextLevel()) * 100 }}%;"
+                    data-current-xp="{{ app.user.selectedEmpire.hero.xp }}" 
+                    data-xp-required="{{ app.user.selectedEmpire.hero.getXpRequiredForNextLevel() }}"></div>
+                <div class="xp-text">XP: {{ app.user.selectedEmpire.hero.xp }} / {{ app.user.selectedEmpire.hero.getXpRequiredForNextLevel() }}</div>
+            </div>
+
+            Niveau : {{ app.user.selectedEmpire.hero.level }} / ∞
+        </div>
+    </a>
+</div>

@@ -1,0 +1,57 @@
+.unit {
+    overflow: hidden; /* Clearfix pour éviter que le contenu dépasse */
+    padding: 3%;
+}
+
+.unit-img {
+    width: 16%;
+    float: left; /* Aligner l'image à gauche */
+    margin-right: 2%; /* Ajouter un espace entre l'image et le texte */
+}
+
+.unit-info {
+    float: left; /* Aligner le texte à gauche de l'image */
+    width: 82%; /* La largeur totale est de 100%, nous utilisons 82% pour laisser de l'espace pour l'image et la marge */
+}
+
+.create-unit {
+    padding: 10px 20px;
+    background-color: #555;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-unit:hover {
+    background-color: #777;
+}
+
+.selection-panel {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.selection-panel h1 {
+    color: #c0a16b; /* Couleur or */
+    text-align: center;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.selection-panel h2 {
+    color: #fff;
+    text-shadow: 1px 1px 2px #000;
+    margin-bottom: 15px;
+}
+
+.unit-selection {
+    margin-bottom: 20px;
+}
+
+.unit-selection label {
+    color: #aad;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #000;
+}

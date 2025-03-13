@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Bienvenue dans Solombra !{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        
+        {% block stylesheets %}
+            {% include 'base/stylesheets.html.twig' %}
+        {% endblock %}
+    </head>
+    <body>
+
+        {% block body %}{% endblock %}
+
+        {% block javascripts %}
+            {% if bootstrapJs is defined %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.min.js" integrity="sha512-EKWWs1ZcA2ZY9lbLISPz8aGR2+L7JVYqBAYTq5AXgBkSjRSuQEGqWx8R1zAX16KdXPaCjOCaKE8MCpU0wcHlHA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            {% endif %}
+
+            {% if reactJs is defined %}
+            <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin="anonymous"></script>
+            <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            {% endif %}
+
+            {% if shadowFightJs is defined %}
+            <script src="{{ asset('js/games/shadowFightApp.js') }}"></script>
+            {% endif %}
+
+            {% if puzzleMystiqueJs is defined %}
+            <script src="{{ asset('js/games/puzzleMystique/puzzle.js') }}"></script>
+            <script src="{{ asset('js/games/puzzleMystique/puzzleMystique.js') }}"></script>
+            {% endif %}
+
+            {% if tileMystiqueJs is defined %}
+            <script src="{{ asset('js/games/tileMystique.js') }}"></script>
+            {% endif %}
+
+            {% if universeJs is defined %}
+            <script type="module" src="{{ asset('universe/2d/main.js?v=1') }}"></script>
+            {% endif %}
+
+        {% endblock %}
+    </body>
+</html>

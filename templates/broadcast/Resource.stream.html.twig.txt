@@ -1,0 +1,26 @@
+{# Learn how to use Turbo Streams: https://github.com/symfony/ux-turbo#broadcast-doctrine-entities-update #}
+{% block create %}
+<turbo-stream action="append" target="resources">
+    <template>
+        <div id="{{ 'resource_' ~ resource.id }}">
+            #{{ resource.id }} created
+        </div>
+    </template>
+</turbo-stream>
+{% endblock %}
+
+{% block update %}
+
+<turbo-stream action="update" target="resources">
+    <template>
+        SombreFer: <span>{{ app.user.selectedEmpire.resource.sombreFer }}</span> <img src="{{ asset('images/sombrefer.png') }}" class="resources-img" alt="Obscurmine">
+        FongiSpore: <span>{{ app.user.selectedEmpire.resource.fongiSpore }}</span> <img src="{{ asset('images/fongispore.png') }}" class="resources-img" alt="Fongiferme">
+        EtherNoc: <span>{{ app.user.selectedEmpire.resource.etherNoc }}</span> <img src="{{ asset('images/ethernoc.png') }}" class="resources-img" alt="Ténebrescierie">
+        Solumns: <span>{{ app.user.solumns }}</span> <img src="{{ asset('images/solumns.png') }}" class="resources-img" alt="Solums">
+    </template>
+</turbo-stream>
+{% endblock %}
+
+{% block remove %}
+<turbo-stream action="remove" target="resource_{{ resource.id }}"></turbo-stream>
+{% endblock %}

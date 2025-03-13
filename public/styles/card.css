@@ -1,0 +1,15 @@
+.card {
+    background-color: #222;
+    border: none;
+    color: white;
+}
+
+.card-header {
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #444;
+}
+
+.card-body a {
+    margin-right: 1rem;
+}

@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Solombra{% endblock %}
+
+{# Css/Js Loading #}
+{% set coreCss = 1%}
+{% set heroCss = 1%}
+{% set modalCss = 1%}
+{% set bootstrapCss = 1%}
+{% set bootstrapJs = 1%}
+
+{% block body %}
+    {% include 'base/header.html.twig' %}
+<style>
+/* Style pour la ligne de séparation */
+.separator {
+    width: 100%;
+    border-top: 2px solid #000; /* Ligne de séparation */
+    margin: 10px 0; /* Espacement au-dessus et en dessous de la ligne de séparation */
+}
+</style>
+    <div class="main-panel">
+        <section class="content">
+            <div class="container-fluid">
+
+                {% block card %}
+                    <div class="heroes-selection">
+                        {% for hero in heroes %}
+                            {% if hero.id >= 9 and hero.id <= 12 %}
+                                <div class="hero-container">
+                                    <img class="hero" src="{{ asset(hero.image) }}" alt="Destructeur" data-hero-id="{{ hero.id }}">
+                                    <div class="hero-description" id="description-{{ hero.id }}" style="display: none;">
+                                        <h3>{{ hero.name }}</h3>
+                                        <p>{{ hero.description }}</p>
+                                        <form method="post" action="{{ path('app_hero_buy', {'heroId': hero.id, 'dimension': dimension, 'zone': zone}) }}">
+                                            <button type="submit" class="select-hero-button">Sélectionner ce héros pour {{ hero.cost }} <img src="{{ asset('images/resource/solumns_min.png') }}" alt="Coût" /></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {% if hero.id == 12 %}
+                                    </br></br>
+                                    <div class="separator"></div> <!-- Ajouter une ligne de séparation après le héros ayant l'ID 12 -->
+                                    </br>
+                                {% endif %}
+                            {% endif %}
+                            
+                            {% if hero.id >= 13 and hero.id <= 17 %}
+                                <div class="hero-container">
+                                    <img class="hero" src="{{ asset(hero.image) }}" alt="Destructeur" data-hero-id="{{ hero.id }}">
+                                    <div class="hero-description" id="description-{{ hero.id }}" style="display: none;">
+                                        <h3>{{ hero.name }}</h3>
+                                        <p>{{ hero.description }}</p>
+                                        <form method="post" action="{{ path('app_hero_buy', {'heroId': hero.id, 'dimension': dimension, 'zone': zone}) }}">
+                                            <button type="submit" class="select-hero-button">Sélectionner ce héros pour {{ hero.cost }} <img src="{{ asset('images/resource/solumns_min.png') }}" alt="Coût" /></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                {% if hero.id == 17 %}
+                                    <div class="separator"></div> <!-- Ajouter une ligne de séparation après le héros ayant l'ID 17 -->
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    {% include ('base/flash-message.html.twig') %}
+                {% endblock %}
+
+                <!-- Clear Floats -->
+                <div style="clear:both;"></div>
+            </div>
+        </section>
+    </div>
+
+<style>
+    .content {
+        margin: 2rem 0;
+    }
+
+    .container-fluid {
+        margin: auto;
+        position: relative;
+        text-align: center; /* Centre les images des héros */
+    }
+
+</style>
+<script>
+    document.querySelectorAll('.hero').forEach(function(heroImg) {
+        heroImg.addEventListener('click', function() {
+            var heroId = this.getAttribute('data-hero-id');
+            var description = document.getElementById('description-' + heroId);
+            // Hide all descriptions
+            document.querySelectorAll('.hero-description').forEach(function(desc) {
+                desc.style.display = 'none';
+            });
+            // Show the clicked hero's description
+            description.style.display = 'block';
+        });
+    });
+
+    document.querySelectorAll('.select-hero').forEach(function(selectButton) {
+        selectButton.addEventListener('click', function() {
+            var heroId = this.getAttribute('data-hero-id');
+            // Logic to handle hero selection
+            console.log('Empire selected: ' + heroId);
+            // You might want to make an AJAX request here or update the session
+        });
+    });
+</script>
+
+{% endblock %}

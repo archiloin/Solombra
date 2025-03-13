@@ -1,0 +1,59 @@
+/* Styles pour le footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-image: linear-gradient(to bottom, #0d0d0d 0%, #2c3e50 100%);
+  color: var(--color-light);
+  padding: 1rem 0;
+  font-family: 'Gothic A1', sans-serif;
+  border-top: 2px solid var(--color-mystic);
+}
+  
+  /* Styles pour les boutons dans le footer */
+  .commands .btn-dark, .quick-actions .btn-danger {
+    margin-right: 0.5rem;
+    border: none;
+    background-color: var(--color-dark); /* Couleur de fond pour les boutons */
+    color: var(--color-light);
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    transition: all var(--transition-speed) ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre pour un effet 3D */
+  }
+  
+  .commands .btn-dark:hover, .quick-actions .btn-danger:hover {
+    background-color: var(--color-highlight); /* Changement de couleur au survol */
+    color: var(--color-dark);
+  }
+  
+  /* Styles pour les indicateurs dans le footer */
+  .indicators {
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Texte avec ombre portée pour un effet doux */
+  }
+  
+  .indicators span {
+    color: var(--color-highlight); /* Couleur d'accentuation pour les chiffres des indicateurs */
+  }
+  
+  /* Effet de glow pour les indicateurs au survol */
+  .indicators span:hover {
+    text-shadow: 0 0 8px var(--color-highlight), 0 0 10px var(--color-highlight);
+  }
+  
+  /* Style pour les boutons d'action rapide */
+  .quick-actions .btn-danger {
+    background-color: var(--color-mystic);
+    color: var(--color-light);
+  }
+  
+  /* Augmentation de l'opacité du texte pour une meilleure lisibilité */
+  .quick-actions .btn-danger:hover {
+    background-color: darken(var(--color-mystic), 10%);
+    color: var(--color-light);
+  }
+  

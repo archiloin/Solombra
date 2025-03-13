@@ -1,0 +1,29 @@
+1. Force de Cohésion Cosmique (FCC)
+
+Équation Conceptuelle :
+FCC(t,θ)=(b(t)⋅eimθ)⋅Ψ(t,r(t,θ))FCC(t,θ)=(b(t)⋅eimθ)⋅Ψ(t,r(t,θ))
+
+Où :
+
+    b(t)b(t) est une fonction temporelle représentant l'intensité de la FCC, qui pourrait être liée à la manière dont la matière et l'énergie sont distribuées dans l'univers.
+    Ψ(t,r(t,θ))Ψ(t,r(t,θ)) est une fonction complexe qui modélise les interactions cosmiques, comme la gravitation à grande échelle ou l'effet de l'énergie sombre.
+
+2. Force de Liaison Quantique (FLQ)
+
+Équation Conceptuelle :
+FLQ(t,θ)=(c(t)⋅eipθ)⋅Ω(t,r(t,θ))FLQ(t,θ)=(c(t)⋅eipθ)⋅Ω(t,r(t,θ))
+
+Où :
+
+    c(t)c(t) reflète l'évolution des interactions quantiques au fil du temps, comme les forces nucléaires et électromagnétiques à l'échelle subatomique.
+    Ω(t,r(t,θ))Ω(t,r(t,θ)) décrit la dynamique des particules et des champs au niveau quantique.
+
+3. Force d'Expansion Dynamique (FED)
+
+Équation Conceptuelle :
+FED(t,θ)=(d(t)⋅eiqθ)⋅Λ(t,r(t,θ))FED(t,θ)=(d(t)⋅eiqθ)⋅Λ(t,r(t,θ))
+
+Où :
+
+    d(t)d(t) est une mesure de l'expansion de l'univers, reflétant des phénomènes comme l'inflation cosmique et l'accélération de l'expansion due à l'énergie sombre.
+    Λ(t,r(t,θ))Λ(t,r(t,θ)) représente les forces et les mécanismes sous-jacents responsables de l'expansion de l'univers.
